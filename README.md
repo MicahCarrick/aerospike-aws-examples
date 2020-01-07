@@ -1,10 +1,19 @@
 Aerospike AWS Examples
 ================================================================================
 
-Use jump server in a one-liner:
+Temporary Notes
+--------------------------------------------------------------------------------
+
+Provision the example AWS resources using `terraform apply`:
 
 ```
-ssh -J ec2-user@34.219.144.184 ec2-user@10.0.1.220
+terraform apply -var-file=examples/example-02.tfvars -var='key_name=micahcarrick'
+```
+
+Use the `-j` flag to SSH to the Aerospike nodes through the bastion host:
+
+```
+ssh -J ec2-user@[bastion host IP] ec2-user@[aerospike node IP]
 ```
 
 Verify Aerospike Server instances are routed through the NAT Gateway:
@@ -55,7 +64,7 @@ WBPS = DEFRAG_AMPLIFICATION × (WRITES_PER_SECOND × RECORD_KIB) ÷ LARGE_BLOCK_
      = 70.312
 ```
 
-To determin the EBS IOPS of the `3x` ACT workload:
+To determine the EBS IOPS of the `3x` ACT workload:
 
 ```
 IOPS = CEIL(WBPS × (LARGE_BLOCK_KIB ÷ EBS_IO_KIB))
@@ -113,19 +122,7 @@ Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu
 nvme1n1           0.00     0.00 6070.58   70.58 18034.67  9034.67     8.82     0.27    0.18    0.18    0.17   0.04  23.47
 ```
 
-#### Provision Infrastructure
 
-Provision the example AWS resources using `terraform apply`:
-
-```
-terraform apply -var-file=examples/example-02.tfvars -var='key_name=micahcarrick'
-```
-
-Use the `-j` flag to SSH to the Aerospike nodes through the bastion host:
-
-```
-ssh -J ec2-user@[bastion host IP] ec2-user@[aerospike node IP]
-```
 
 
 #### Configure Aerospike
