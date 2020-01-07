@@ -1,0 +1,22 @@
+---
+- hosts: all
+  remote_user: ec2-user
+  tasks:
+  - name: Update system packages
+    #become_user: root
+    yum:
+      name: "*"
+      state: "latest"
+    become: yes
+  - name: Install Aerospike Server dependencies
+    yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - gcc
+      - git 
+    become: yes
+  - name: Install Aerospike Server
+    get_url:
+      url: "http://www.aerospike.com/enterprise/download/server/{{ aerospike_version }}/artifact/el6"
+      dest: "/home/{{ ansible_ssh_user }}"

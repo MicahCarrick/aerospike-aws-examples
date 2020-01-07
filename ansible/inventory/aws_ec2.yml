@@ -1,0 +1,11 @@
+# Ansible AWS EC2 dynamic inventory plugin
+plugin: aws_ec2
+regions:
+  - us-west-2
+filters:
+  tag:Project: ACT Results
+hostnames:
+  - ip-address
+keyed_groups:
+  - key: tags.Application
+    separator: ""
